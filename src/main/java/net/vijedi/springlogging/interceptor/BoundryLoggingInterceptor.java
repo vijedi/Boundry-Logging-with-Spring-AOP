@@ -68,10 +68,7 @@ public class BoundryLoggingInterceptor {
             returning = "retVal")
     public void logComplete(JoinPoint jp, Object retVal) {
         Log log = getLog(jp);
-        if(log.isDebugEnabled()) {
-            Method met = getMethod(jp);
-            log.debug("Completed " + met.getName());
-        }
+        logReturn(jp, log);
     }
 
     /**
@@ -86,19 +83,34 @@ public class BoundryLoggingInterceptor {
             throwing = "ex"
     )
     public void processException(JoinPoint jp, Throwable ex) throws SystemException, DomainException {
-        Log log = getLog(jp);
         if(ex instanceof SystemException) {
             // System exceptions were logged at source
-            // do not log here
+            // do not log the exception, just the return
+            logReturn(jp, getLog(jp));
             throw (SystemException) ex;
         } else if(ex instanceof DomainException) {
-            log.error(ex.getMessage(), ex);
+            logException(jp, ex);
             throw (DomainException) ex;
         } else {
-            log.error(ex.getMessage(), ex);
+            logException(jp, ex);
             throw new DomainException(ex);
         }
 
+    }
+
+    private void logException(JoinPoint jp, Throwable ex) {
+        Log log = getLog(jp);
+                
+        log.error(ex.getMessage(), ex);
+
+        logReturn(jp, log);
+    }
+
+    private void logReturn(JoinPoint jp, Log log) {
+        if(log.isDebugEnabled()) {
+            Method met = getMethod(jp);
+            log.debug("Completed " + met.getName());
+        }
     }
 
     /**

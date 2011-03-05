@@ -2,7 +2,6 @@ package net.vijedi.springlogging;
 
 import net.vijedi.springlogging.exceptions.DomainException;
 import net.vijedi.springlogging.exceptions.SystemException;
-import net.vijedi.springlogging.interceptor.BoundryLogger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,21 +9,17 @@ import org.springframework.stereotype.Component;
 
 /**
  * Author: Tejus Parikh
- * Date: 3/5/11 11:22 AM
+ * Date: 3/5/11 1:51 PM
  */
-@Component
-public class BoundryExample {
+@Component("oldSchoolBoundry")
+public class OldSchoolBoundry implements BoundryInterface {
 
-    private static final Log log = LogFactory.getLog(BoundryExample.class);
+    private static final Log log = LogFactory.getLog(OldSchoolBoundry.class);
+
     @Autowired
     private Service service;
 
-    public void go() {
-        showOldWay();
-        showWithAop();
-    }
-
-    private void oldServiceException() throws SystemException, DomainException {
+    public void callGetKey() throws SystemException, DomainException {
         if(log.isDebugEnabled()) {
             log.debug("entering oldServiceException");
         }
@@ -42,7 +37,7 @@ public class BoundryExample {
         }
     }
 
-    private void oldDomainException() throws SystemException, DomainException {
+    public void callCalcuate() throws SystemException, DomainException {
         if(log.isDebugEnabled()) {
             log.debug("entering oldServiceException");
         }
@@ -58,36 +53,5 @@ public class BoundryExample {
         if(log.isDebugEnabled()) {
             log.debug("exiting oldServiceException");
         }
-    }
-
-
-    @BoundryLogger
-    private void aopServiceException() throws SystemException, DomainException {
-       service.getKey();
-    }
-
-    @BoundryLogger
-    private void aopDomainException() throws SystemException, DomainException {
-        service.calculate();
-    }
-
-    private void showOldWay() {
-        try {
-            oldServiceException();
-        } catch(Throwable t) {}
-
-        try {
-            oldDomainException();
-        } catch(Throwable t) {}
-    }
-
-    private void showWithAop() {
-        try {
-            aopServiceException();
-        } catch(Throwable t) {}
-
-        try {
-            aopDomainException();
-        } catch(Throwable t) {}
     }
 }

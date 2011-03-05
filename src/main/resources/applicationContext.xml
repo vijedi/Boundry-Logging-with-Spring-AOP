@@ -14,8 +14,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="net.vijedi" />
 
-    <aop:aspectj-autoproxy proxy-target-class="false"/>
-    <!--<context:load-time-weaver/> -->
-    <!--<bean id="boundryLoggingInterceptor" class="net.vijedi.springlogging.interceptor.BoundryLoggingInterceptor"/>-->
+    <aop:aspectj-autoproxy />
+    <bean id="boundryLoggingInterceptor" class="net.vijedi.springlogging.interceptor.BoundryLoggingInterceptor"/>
 
 </beans>
