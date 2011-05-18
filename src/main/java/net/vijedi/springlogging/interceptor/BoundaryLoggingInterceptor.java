@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
 
@@ -18,6 +19,7 @@ import java.lang.reflect.Method;
  * Date: 3/5/11 11:26 AM
  */
 @Aspect
+@Service
 public class BoundaryLoggingInterceptor {
 
     private static final Log log = LogFactory.getLog(BoundaryLoggingInterceptor.class);
