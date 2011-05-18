@@ -18,16 +18,16 @@ import java.lang.reflect.Method;
  * Date: 3/5/11 11:26 AM
  */
 @Aspect
-public class BoundryLoggingInterceptor {
+public class BoundaryLoggingInterceptor {
 
-    private static final Log log = LogFactory.getLog(BoundryLoggingInterceptor.class);
+    private static final Log log = LogFactory.getLog(BoundaryLoggingInterceptor.class);
 
     /**
      * Log entering into a method
      * @param jp
      */
-    @Before("@annotation(net.vijedi.springlogging.interceptor.BoundryLogger)")
-    public void logInvokation(JoinPoint jp) {
+    @Before("@annotation(net.vijedi.springlogging.interceptor.BoundaryLogger)")
+    public void logInvocation(JoinPoint jp) {
         Log log = getLog(jp);
         if (log.isDebugEnabled()) {
             Method met = getMethod(jp);
@@ -64,7 +64,7 @@ public class BoundryLoggingInterceptor {
      * @param retVal
      */
     @AfterReturning(
-            pointcut = "@annotation(net.vijedi.springlogging.interceptor.BoundryLogger)",
+            pointcut = "@annotation(net.vijedi.springlogging.interceptor.BoundaryLogger)",
             returning = "retVal")
     public void logComplete(JoinPoint jp, Object retVal) {
         Log log = getLog(jp);
@@ -79,7 +79,7 @@ public class BoundryLoggingInterceptor {
      * @throws DomainException
      */
     @AfterThrowing(
-            pointcut = "@annotation(net.vijedi.springlogging.interceptor.BoundryLogger)",
+            pointcut = "@annotation(net.vijedi.springlogging.interceptor.BoundaryLogger)",
             throwing = "ex"
     )
     public void processException(JoinPoint jp, Throwable ex) throws SystemException, DomainException {
@@ -100,9 +100,7 @@ public class BoundryLoggingInterceptor {
 
     private void logException(JoinPoint jp, Throwable ex) {
         Log log = getLog(jp);
-                
         log.error(ex.getMessage(), ex);
-
         logReturn(jp, log);
     }
 

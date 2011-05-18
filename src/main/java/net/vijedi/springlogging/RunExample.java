@@ -16,7 +16,7 @@ public class RunExample {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         
-        BoundryInterface oldSchool = context.getBean("oldSchoolBoundry", BoundryInterface.class);
+        BoundaryInterface oldSchool = context.getBean("oldSchoolBoundary", BoundaryInterface.class);
         try {
             oldSchool.callCalcuate();
         } catch (Throwable t) {
@@ -29,7 +29,7 @@ public class RunExample {
             // Do nothing error should be logged
         }
 
-        BoundryInterface aop = context.getBean("aopBoundry", BoundryInterface.class);
+        BoundaryInterface aop = context.getBean("aopBoundary", BoundaryInterface.class);
         try {
             aop.callCalcuate();
         } catch (Throwable t) {

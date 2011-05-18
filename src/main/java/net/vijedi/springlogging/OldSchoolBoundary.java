@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
  * Author: Tejus Parikh
  * Date: 3/5/11 1:51 PM
  */
-@Component("oldSchoolBoundry")
-public class OldSchoolBoundry implements BoundryInterface {
+@Component("oldSchoolBoundary")
+public class OldSchoolBoundary implements BoundaryInterface {
 
-    private static final Log log = LogFactory.getLog(OldSchoolBoundry.class);
+    private static final Log log = LogFactory.getLog(OldSchoolBoundary.class);
 
     @Autowired
     private Service service;
